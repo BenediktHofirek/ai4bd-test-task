@@ -1,0 +1,20 @@
+mat-card {
+	width: 30%;
+	margin: 10vh auto;
+}
+
+mat-card-title {
+	text-align: center;
+}
+
+mat-card-content {
+	margin: auto;
+}
+
+mat-icon {
+	border: 1px solid black;
+	font-size: 35px;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
