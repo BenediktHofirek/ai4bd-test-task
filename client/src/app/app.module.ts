@@ -8,6 +8,7 @@ import { DocumentsOverviewComponent } from "./documents-overview/documents-overv
 import { DocumentDetailComponent } from "./document-detail/document-detail.component";
 import { MaterialModule } from "./material/material.module";
 import { ItemComponent } from './documents-overview/item/item.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ItemComponent } from './documents-overview/item/item.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MaterialModule
   ],
   providers: [],
