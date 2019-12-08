@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: [ './documents-overview.component.css' ]
 })
 export class DocumentsOverviewComponent implements OnInit {
-	constructor() {
-  }
+	constructor() {}
 
-  documents = [];
+	documents = [];
 
 	ngOnInit() {
 		this.documents = [

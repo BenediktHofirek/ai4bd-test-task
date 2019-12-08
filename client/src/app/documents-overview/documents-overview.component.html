@@ -1,9 +1,12 @@
-<mat-card>
-  <mat-card-title>Number of documents {{documents.length}}</mat-card-title>
-  <mat-card-content>
-    {{documents.map((document => {
-    return <app-item [document]='document'></app-item>
-    }))}}
-  </mat-card-content>
+ <mat-card-title>Number of documents {{documents.length}}</mat-card-title>
+<mat-card-content>
+  <mat-list>
+    <app-item
+      *ngFor="let document of documents"
+      [title]="document.title"
+      [path]="document._id"></app-item>
+  </mat-list>
+</mat-card-content>
+<button>
   <mat-icon color="primary">add</mat-icon>
-</mat-card>
+</button>
