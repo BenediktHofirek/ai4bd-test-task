@@ -8,13 +8,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DocumentDetailComponent implements OnInit {
   docId: number;
-  pageId: number;
-  
-
+  pageNumbers: number[];
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.docId = this.route.snapshot.params['docId'];
-    this.pageId = this.route.snapshot.params['pageId'] || null;
+    this.pageNumbers = [1,2,3];
   }
 }

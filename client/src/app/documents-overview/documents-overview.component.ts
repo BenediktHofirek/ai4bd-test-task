@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {Title} from '../types';
+import { titlesQuery } from '../graphql';
 
 @Component({
 	selector: 'app-documents-overview',
@@ -6,26 +9,24 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: [ './documents-overview.component.css' ]
 })
 export class DocumentsOverviewComponent implements OnInit {
-	constructor() {}
-
-	documents = [];
+	private documents: Title[];
+	
+	constructor(private apollo: Apollo) {}
 
 	ngOnInit() {
 		this.documents = [
 			{
-				_id: 1,
-				title: 'blockchain',
-				author: 'comunity',
-				dateCreated: 'yersterday',
-				pages: [ 1, 2 ]
+				title: 'blockchain'
 			},
 			{
-				_id: 2,
-				title: 'crypto',
-				author: 'comunity',
-				dateCreated: 'tommorow',
-				pages: [ 3, 4 ]
+				title: 'crypto'
 			}
 		];
+
+		this.apollo.query({
+			query: titlesQuery
+		  }).toPromise().then((value) => {
+			console.log(value);
+		  });
 	}
 }
