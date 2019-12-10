@@ -1,14 +1,35 @@
+<mat-card-title>Document {{documentNumber}}</mat-card-title>
 <mat-card-content>
-    <mat-card-title>Document {{docId}}</mat-card-title>
+    <mat-card-title>{{document && document.title}}</mat-card-title>
     <mat-list>
-        <mat-list-item *ngFor="let number of pageNumbers">
-            <button>
-                {{number}}
-            </button>
+        <mat-list-item>
+            <p>
+                <span>author:</span>
+                <span>{{document && document.author}}</span>
+            </p>
         </mat-list-item>
+        <mat-list-item>
+            <p>
+                <span>date:</span>
+                <span>{{convertedDate}}</span>
+            </p>
+        </mat-list-item>
+        <mat-list-item>
+            <p>pages:</p>
+            </mat-list-item>
     </mat-list>
-    <button mat-icon-button>
-        <mat-icon color="primary">add</mat-icon>
-    </button>
+            <div class="buttons">
+                <button 
+                    *ngFor="let page of pages; index as i;"
+                    [ngClass]="{pageButton: true, active: i === activeButtonIndex}"
+                    (click)="handleLinkClick(page,i)">
+                    {{i+1}}
+                </button>
+                <button (click)="addPage()" class="addButton">
+                    <mat-icon color="primary">add</mat-icon>
+                </button>
+            </div>
+        
+
 </mat-card-content>
 <router-outlet></router-outlet>

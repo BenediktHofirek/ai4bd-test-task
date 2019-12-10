@@ -1,5 +1,7 @@
 <mat-list-item>
-    <a matLine routerLink="/{{path}}">
+    <a matLine
+        [routerLink]=''
+        (click)='handleLinkClick()'>
         {{title}}
         <mat-icon>play_arrow</mat-icon>
     </a>

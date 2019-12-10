@@ -17,7 +17,8 @@ const schema = buildSchema(`
   }
 
   type Query {
-    page(_id: ID): Page
+    page(id: String): Page
+    document(id: String): Document
     documents: [Document]
   }
 `);

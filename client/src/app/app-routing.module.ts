@@ -6,9 +6,12 @@ import { PageComponent } from './document-detail/page/page.component';
 
 const routes: Routes = [
 	{ path: '', component: DocumentsOverviewComponent },
-	{ path: ':docId', component: DocumentDetailComponent, children: [
-		{path: ':pageId', component: PageComponent}
-	]}
+	{
+		path: ':docId',
+		component: DocumentDetailComponent,
+		children: [ { path: ':pageId', component: PageComponent } ]
+	},
+	{ path: '**', redirectTo: '' }
 ];
 
 @NgModule({

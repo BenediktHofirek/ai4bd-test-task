@@ -1,10 +1,10 @@
- <mat-card-title>Number of documents {{documents.length}}</mat-card-title>
+ <mat-card-subtitle>Number of documents {{documentsCount}}</mat-card-subtitle>
 <mat-card-content>
   <mat-list>
     <app-item
-      *ngFor="let document of documents"
+      *ngFor="let document of documents; index as i"
       [title]="document.title"
-      [path]="document._id"></app-item>
+      (linkClickEvent)="handleLinkClick(document._id, i)"></app-item>
   </mat-list>
 </mat-card-content>
 <button>

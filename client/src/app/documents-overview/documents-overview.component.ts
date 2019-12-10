@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import {Title} from '../types';
+import { Apollo } from 'apollo-angular';
+import { Title } from '../types';
 import { titlesQuery } from '../graphql';
+import { ApolloQueryResult } from 'apollo-client';
+import { Router } from '@angular/router';
+import { IndexService } from '../services/index.service';
 
 @Component({
 	selector: 'app-documents-overview',
@@ -9,24 +12,25 @@ import { titlesQuery } from '../graphql';
 	styleUrls: [ './documents-overview.component.css' ]
 })
 export class DocumentsOverviewComponent implements OnInit {
-	private documents: Title[];
-	
-	constructor(private apollo: Apollo) {}
+	documents: Title[];
+	documentsCount: number;
+
+	constructor(private apollo: Apollo, private router: Router, private indexService: IndexService) {}
 
 	ngOnInit() {
-		this.documents = [
-			{
-				title: 'blockchain'
-			},
-			{
-				title: 'crypto'
-			}
-		];
+		this.apollo
+			.query({
+				query: titlesQuery
+			})
+			.toPromise()
+			.then((res: ApolloQueryResult<any>) => {
+				this.documents = res.data.documents;
+				this.documentsCount = res.data.documents.length;
+			});
+	}
 
-		this.apollo.query({
-			query: titlesQuery
-		  }).toPromise().then((value) => {
-			console.log(value);
-		  });
+	handleLinkClick(path: string, index: number): void {
+		this.indexService.setDocumentIndex(index);
+		this.router.navigate([ path ]);
 	}
 }

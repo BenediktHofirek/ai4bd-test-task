@@ -9,11 +9,15 @@ import * as Material from '@angular/material';
 		Material.MatCardModule,
 		Material.MatIconModule,
 		Material.MatListModule,
-		Material.MatButtonModule
+		Material.MatButtonModule,
+		Material.MatButtonToggleModule
 	],
-	exports: [ Material.MatCardModule, 
-		Material.MatIconModule, 
-		Material.MatListModule, 
-		Material.MatButtonModule ]
+	exports: [
+		Material.MatCardModule,
+		Material.MatIconModule,
+		Material.MatListModule,
+		Material.MatButtonModule,
+		Material.MatButtonToggleModule
+	]
 })
 export class MaterialModule {}

@@ -1,17 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+	selector: 'app-item',
+	templateUrl: './item.component.html',
+	styleUrls: [ './item.component.css' ]
 })
 export class ItemComponent implements OnInit {
+	constructor() {}
 
-  constructor() { }
+	ngOnInit() {}
 
-  ngOnInit() {
-  }
+	@Input() title: string;
+	@Output() linkClickEvent = new EventEmitter<void>();
 
-  @Input() title: string;
-  @Input() path: number;
+	handleLinkClick():void{
+		this.linkClickEvent.emit();
+	}
 }
