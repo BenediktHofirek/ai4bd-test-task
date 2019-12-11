@@ -5,6 +5,9 @@ import { Document } from '../types';
 import { documentQuery } from '../graphql';
 import { ApolloQueryResult } from 'apollo-client';
 import { IndexService } from '../services/index.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { PopupFormComponent } from '../shared/popup-form/popup-form.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
 	selector: 'app-document-detail',
@@ -20,6 +23,7 @@ export class DocumentDetailComponent implements OnInit {
 	activeButtonIndex: number;
 
 	constructor(
+		private dialog: MatDialog,
 		private activatedRoute: ActivatedRoute,
 		private apollo: Apollo,
 		private indexService: IndexService,
@@ -38,7 +42,9 @@ export class DocumentDetailComponent implements OnInit {
 			.then((res: ApolloQueryResult<any>) => {
 				this.document = res.data.document;
 				this.pages = res.data.document.pages;
-				this.convertedDate = this.convertDate(res.data.document.dateCreated);
+				this.convertedDate = res.data.document.dateCreated
+					? this.convertDate(res.data.document.dateCreated)
+					: '';
 			});
 	}
 
@@ -55,5 +61,24 @@ export class DocumentDetailComponent implements OnInit {
 		this.router.navigate([ path ], { relativeTo: this.activatedRoute });
 	}
 
-	addPage(): void {}
+	addPageDialog() {
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+
+		dialogConfig.data = {
+			formFields: [ { type: 'textarea', label: 'text', options: { rows: '15', cols: '50' } } ],
+			saveButtonText: 'Add Page'
+		};
+
+		const dialogRef = this.dialog.open(PopupFormComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe((form: NgForm) => {
+			if (form) {
+				console.log(form, form.value, form.value.text);
+				//saveToDatabase
+			}
+		});
+	}
 }

@@ -1,0 +1,51 @@
+<mat-dialog-content>
+	<div class="topActions">
+        <app-icon-button 
+        class="closeButton"
+        mat-dialog-close
+        size="20px"
+        icon="close"
+        borderWidth="1px">
+		</app-icon-button>
+	</div>
+    <form #f="ngForm">
+        <div class="form-field" *ngFor="let field of data.formFields"
+            [ngSwitch]="field.type">
+            <div *ngSwitchCase='"text"'>
+                <label [for]="field.label">{{field.label + ':'}}</label>
+                <input
+                    type="text"
+                    [id]="field.label"
+                    [name]="field.label"
+                    ngModel
+                    required
+                    />
+            </div>
+            <div class="form-field" *ngSwitchCase='"date" '>
+                <label [for]="field.label">{{field.label + ':'}}</label>
+                <input
+                    type="date"
+                    [id]="field.label"
+                    [name]="field.label"
+                    ngModel
+                    required
+                    />
+            </div>
+            <div class="form-field" *ngSwitchCase='"textarea" '>
+                <label [for]="field.label" style="vertical-align: top">{{field.label + ':'}}</label>
+                <textarea 
+                    [rows]='field.options.rows' 
+                    [cols]='field.options.cols' 
+                    [id]="field.label"
+                    [name]="field.label"
+                    ngModel 
+                    required
+                    >
+                </textarea>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align='end'>
+    <button [mat-dialog-close]="f" [disabled]="f.invalid" class="saveButton">{{data.saveButtonText}}</button>
+</mat-dialog-actions>

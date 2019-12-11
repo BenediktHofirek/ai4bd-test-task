@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { NgForm } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
 import { Title } from '../types';
 import { titlesQuery } from '../graphql';
 import { ApolloQueryResult } from 'apollo-client';
 import { Router } from '@angular/router';
 import { IndexService } from '../services/index.service';
+import { PopupFormComponent } from '../shared/popup-form/popup-form.component';
 
 @Component({
 	selector: 'app-documents-overview',
@@ -15,7 +18,12 @@ export class DocumentsOverviewComponent implements OnInit {
 	documents: Title[];
 	documentsCount: number;
 
-	constructor(private apollo: Apollo, private router: Router, private indexService: IndexService) {}
+	constructor(
+		private dialog: MatDialog,
+		private apollo: Apollo,
+		private router: Router,
+		private indexService: IndexService
+	) {}
 
 	ngOnInit() {
 		this.apollo
@@ -32,5 +40,30 @@ export class DocumentsOverviewComponent implements OnInit {
 	handleLinkClick(path: string, index: number): void {
 		this.indexService.setDocumentIndex(index);
 		this.router.navigate([ path ]);
+	}
+
+	addDocumentDialog() {
+		const dialogConfig = new MatDialogConfig();
+
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+
+		dialogConfig.data = {
+			formFields: [
+				{ type: 'text', label: 'title', options: {} },
+				{ type: 'text', label: 'author', options: {} },
+				{ type: 'date', label: 'date', options: {} }
+			],
+			saveButtonText: 'Create'
+		};
+
+		const dialogRef = this.dialog.open(PopupFormComponent, dialogConfig);
+
+		dialogRef.afterClosed().subscribe((form: NgForm) => {
+			if (form) {
+				console.log(form, form.value, form.value.title);
+				//saveToDatabase
+			}
+		});
 	}
 }

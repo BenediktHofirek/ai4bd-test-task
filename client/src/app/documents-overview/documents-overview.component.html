@@ -1,12 +1,16 @@
- <mat-card-subtitle>Number of documents {{documentsCount}}</mat-card-subtitle>
+ <mat-card-title>Number of documents {{documentsCount}}</mat-card-title>
 <mat-card-content>
-  <mat-list>
-    <app-item
-      *ngFor="let document of documents; index as i"
-      [title]="document.title"
-      (linkClickEvent)="handleLinkClick(document._id, i)"></app-item>
-  </mat-list>
+  <app-item
+    *ngFor="let document of documents; index as i"
+    [title]="document.title"
+    (linkClickEvent)="handleLinkClick(document._id, i)">
+  </app-item>
+  <mat-card-actions align="end">
+    <app-icon-button
+      (click)="addDocumentDialog()"
+      icon='add'
+      size='35px'
+      borderWidth="1px">
+    </app-icon-button>
+  </mat-card-actions>
 </mat-card-content>
-<button>
-  <mat-icon color="primary">add</mat-icon>
-</button>

@@ -2,13 +2,13 @@
 <mat-card-content>
     <mat-card-title>{{document && document.title}}</mat-card-title>
     <mat-list>
-        <mat-list-item>
+        <mat-list-item *ngIf="document && document.author">
             <p>
                 <span>author:</span>
                 <span>{{document && document.author}}</span>
             </p>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item *ngIf="convertedDate">
             <p>
                 <span>date:</span>
                 <span>{{convertedDate}}</span>
@@ -16,20 +16,20 @@
         </mat-list-item>
         <mat-list-item>
             <p>pages:</p>
-            </mat-list-item>
+        </mat-list-item>
     </mat-list>
-            <div class="buttons">
-                <button 
-                    *ngFor="let page of pages; index as i;"
-                    [ngClass]="{pageButton: true, active: i === activeButtonIndex}"
-                    (click)="handleLinkClick(page,i)">
-                    {{i+1}}
-                </button>
-                <button (click)="addPage()" class="addButton">
-                    <mat-icon color="primary">add</mat-icon>
-                </button>
-            </div>
-        
+    <div class="buttons">
+        <button
+            *ngFor="let page of pages; index as i;"
+            [ngClass]="{pageButton: true, active: i === activeButtonIndex}"
+            (click)="handleLinkClick(page,i)">
+            {{i+1}}
+        </button>
+        <button (click)="addPageDialog()" class="addButton">
+            <mat-icon color="primary">add</mat-icon>
+        </button>
+    </div>
+
 
 </mat-card-content>
 <router-outlet></router-outlet>

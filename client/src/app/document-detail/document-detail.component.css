@@ -4,6 +4,8 @@ mat-card-title {
 
 mat-card-content {
 	margin: auto;
+	border: 1px solid black;
+	padding: 10px;
 }
 
 mat-icon {
@@ -20,10 +22,17 @@ mat-icon {
 	width: 50px;
 	height: 50px;
 	border-radius: 10px;
-    margin: 0 10px;
-    cursor: pointer;
+	margin: 0 10px;
+	background-color: transparent;
+	cursor: pointer;
+	outline:none
 }
 
 .active {
 	background-color: grey;
 }
+
+mat-list-item span:first-child {
+	display: inline-block;
+	width: 70px;
+	}
