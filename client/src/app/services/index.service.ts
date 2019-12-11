@@ -16,12 +16,4 @@ export class IndexService {
 	setDocumentIndex(index: number): void {
 		this.documentIndex = index;
 	}
-
-	getPageIndex(): number {
-		return this.pageIndex;
-	}
-
-	setPageIndex(index: number): void {
-		this.pageIndex = index;
-	}
 }

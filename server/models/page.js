@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const pageSchema = new Schema({
 	_id: Schema.Types.ObjectId,
-	page: Number,
+	pageNr: Number,
 	text: String
 });
 

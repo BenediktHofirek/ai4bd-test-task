@@ -5,7 +5,7 @@ const documentSchema = new Schema({
 	_id: Schema.Types.ObjectId,
 	title: String,
 	author: String,
-	dateCreated: Date,
+	dateCreated: String,
 	pages: Array
 });
 

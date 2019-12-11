@@ -10,19 +10,23 @@ export const titlesQuery = gql`
 `;
 
 export const documentQuery = gql`
-	query DocumentQuery($id: String!) {
-		document(id: $id) {
+	query DocumentQuery($_id: String!) {
+		document(_id: $id) {
 			title
 			author
 			dateCreated
-			pages
+			pages {
+				_id
+				pageNr
+			}
 		}
 	}
 `;
 
 export const pageQuery = gql`
-	query PageQuery($id: String!) {
-		page(id: $id) {
+	query PageQuery($_id: String!) {
+		page(_id: $id) {
+			pageNr
 			text
 		}
 	}

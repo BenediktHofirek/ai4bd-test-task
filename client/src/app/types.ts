@@ -7,5 +7,10 @@ export interface Document {
 	title: string;
 	author: string;
 	dateCreated: string;
-	pages: string[];
+	pages: Page[];
+}
+
+export interface Page {
+	pageNr: number,
+	text: string
 }

@@ -20,10 +20,10 @@
     </mat-list>
     <div class="buttons">
         <button
-            *ngFor="let page of pages; index as i;"
-            [ngClass]="{pageButton: true, active: i === activeButtonIndex}"
-            (click)="handleLinkClick(page,i)">
-            {{i+1}}
+            *ngFor="let page of pages;"
+            [ngClass]="{pageButton: true, active: page.pageNr === activeButtonNumber}"
+            (click)="handleLinkClick(page,page.pageNr)">
+            {{page.pageNr}}
         </button>
         <button (click)="addPageDialog()" class="addButton">
             <mat-icon color="primary">add</mat-icon>
