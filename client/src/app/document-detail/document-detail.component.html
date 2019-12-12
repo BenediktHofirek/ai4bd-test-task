@@ -1,32 +1,34 @@
-<mat-card-title>Document {{documentNumber}}</mat-card-title>
+<mat-card-title>Document {{documentNumber && documentNumber}}</mat-card-title>
 <mat-card-content>
-    <mat-card-title>{{document && document.title}}</mat-card-title>
+    <mat-card-subtitle class="subtitle">{{document && document.title}}</mat-card-subtitle>
     <mat-list>
-        <mat-list-item *ngIf="document && document.author">
+        <mat-list-item *ngIf="document && document.author" class="listItem">
             <p>
-                <span>author:</span>
+                <span class="label">author:</span>
                 <span>{{document && document.author}}</span>
             </p>
         </mat-list-item>
-        <mat-list-item *ngIf="convertedDate">
+        <mat-list-item *ngIf="convertedDate" class="listItem">
             <p>
-                <span>date:</span>
+                <span class="label">date:</span>
                 <span>{{convertedDate}}</span>
             </p>
         </mat-list-item>
-        <mat-list-item>
-            <p>pages:</p>
+        <mat-list-item class="listItem">
+            <p>
+				<span class="label">pages:</span>
+			</p>
         </mat-list-item>
     </mat-list>
     <div class="buttons">
         <button
-            *ngFor="let page of pages;"
+            *ngFor="let page of pages"
             [ngClass]="{pageButton: true, active: page.pageNr === activeButtonNumber}"
-            (click)="handleLinkClick(page,page.pageNr)">
+            (click)="handleLinkClick(page._id,page.pageNr)">
             {{page.pageNr}}
         </button>
         <button (click)="addPageDialog()" class="addButton">
-            <mat-icon color="primary">add</mat-icon>
+            <mat-icon>add</mat-icon>
         </button>
     </div>
 

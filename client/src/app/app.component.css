@@ -1,4 +1,6 @@
 mat-card {
-	width: 30%;
-	margin: 10vh auto;
+	border: 1px solid black;
+	width: 310px;
+	margin: 15px auto;
+	background-color: rgb(242, 217, 217);
 }

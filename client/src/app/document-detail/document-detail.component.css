@@ -2,10 +2,17 @@ mat-card-title {
 	text-align: center;
 }
 
+mat-card-subtitle.subtitle {
+	text-align: center;
+	color: black;
+	font-size: 20px;
+}
+
 mat-card-content {
 	margin: auto;
 	border: 1px solid black;
 	padding: 10px;
+	background-color: white;
 }
 
 mat-icon {
@@ -22,7 +29,8 @@ mat-icon {
 	width: 50px;
 	height: 50px;
 	border-radius: 10px;
-	margin: 0 10px;
+	border: 1px solid black;
+	margin: 5px 10px;
 	background-color: transparent;
 	cursor: pointer;
 	outline:none
@@ -32,7 +40,15 @@ mat-icon {
 	background-color: grey;
 }
 
-mat-list-item span:first-child {
+mat-list {
+	margin-bottom: 10px;
+}
+
+mat-list-item.listItem {
+	height: 24px;
+}
+
+mat-list-item span.label{
 	display: inline-block;
 	width: 70px;
 	}

@@ -11,7 +11,7 @@ export const titlesQuery = gql`
 
 export const documentQuery = gql`
 	query DocumentQuery($_id: String!) {
-		document(_id: $id) {
+		document(_id: $_id) {
 			title
 			author
 			dateCreated
@@ -25,9 +25,25 @@ export const documentQuery = gql`
 
 export const pageQuery = gql`
 	query PageQuery($_id: String!) {
-		page(_id: $id) {
+		page(_id: $_id) {
 			pageNr
 			text
+		}
+	}
+`;
+
+export const addPageMutation = gql`
+	mutation addPageMutation($pageNr: Int!, $text: String!, $documentId: String!) {
+		addPage(pageNr: $pageNr, text: $text, documentId: $documentId) {
+			_id
+		}
+	}
+`;
+
+export const addDocumentMutation = gql`
+	mutation addDocumentMutation($title: String!, $author: String!, $dateCreated: String!) {
+		addDocument(title: $title, author: $author, dateCreated: $dateCreated) {
+			_id
 		}
 	}
 `;

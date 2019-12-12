@@ -1,7 +1,8 @@
  <mat-card-title>Number of documents {{documentsCount}}</mat-card-title>
 <mat-card-content>
+  <app-filter label="Filter documents:" (filterChangeEvent)="filterDocuments($event)"></app-filter>
   <app-item
-    *ngFor="let document of documents; index as i"
+    *ngFor="let document of filteredDocuments; index as i"
     [title]="document.title"
     (linkClickEvent)="handleLinkClick(document._id, i)">
   </app-item>

@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class IndexService {
 	private documentIndex: number;
-	private pageIndex: number;
 
 	constructor() {}
 

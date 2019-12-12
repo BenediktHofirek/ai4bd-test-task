@@ -1,4 +1,4 @@
-export interface Title {
+export interface DocumentOverview {
 	_id: string;
 	title: string;
 }
@@ -11,6 +11,28 @@ export interface Document {
 }
 
 export interface Page {
-	pageNr: number,
-	text: string
+	_id: string;
+	pageNr: number;
+	text: string;
+}
+
+export interface PageOverview {
+	_id: string;
+	pageNr: number;
+}
+
+export interface addDocumentResult {
+	data: {
+		addDocument: {
+			_id: string;
+		};
+	};
+}
+
+export interface addPageResult {
+	data: {
+		addPage: {
+			_id: string;
+		};
+	};
 }

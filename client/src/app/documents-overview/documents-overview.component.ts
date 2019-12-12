@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
-import { Title } from '../types';
-import { titlesQuery } from '../graphql';
+import { DocumentOverview, addDocumentResult } from '../types';
+import { titlesQuery, addDocumentMutation } from '../graphql';
 import { ApolloQueryResult } from 'apollo-client';
 import { Router } from '@angular/router';
 import { IndexService } from '../services/index.service';
@@ -15,7 +15,8 @@ import { PopupFormComponent } from '../shared/popup-form/popup-form.component';
 	styleUrls: [ './documents-overview.component.css' ]
 })
 export class DocumentsOverviewComponent implements OnInit {
-	documents: Title[];
+	documents: DocumentOverview[];
+	filteredDocuments: DocumentOverview[];
 	documentsCount: number;
 
 	constructor(
@@ -33,8 +34,17 @@ export class DocumentsOverviewComponent implements OnInit {
 			.toPromise()
 			.then((res: ApolloQueryResult<any>) => {
 				this.documents = res.data.documents;
+				this.filteredDocuments = [...res.data.documents];
 				this.documentsCount = res.data.documents.length;
 			});
+	}
+
+	filterDocuments(filter: string):void{
+		if (filter){
+			this.filteredDocuments = this.documents.filter(doc => doc.title.slice(0, filter.length) === filter);
+		} else {
+			this.filteredDocuments = this.documents;
+		}
 	}
 
 	handleLinkClick(path: string, index: number): void {
@@ -42,7 +52,7 @@ export class DocumentsOverviewComponent implements OnInit {
 		this.router.navigate([ path ]);
 	}
 
-	addDocumentDialog() {
+	addDocumentDialog(): void {
 		const dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = true;
@@ -61,8 +71,25 @@ export class DocumentsOverviewComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe((form: NgForm) => {
 			if (form) {
-				console.log(form, form.value, form.value.title);
-				//saveToDatabase
+				//loading spinner
+				const { value } = form;
+				const { title, author, date } = value;
+				this.apollo
+					.mutate({
+						mutation: addDocumentMutation,
+						variables: { title: title, author: author, dateCreated: date }
+					})
+					.subscribe((res: addDocumentResult) => {
+						if (res && res.data && res.data.addDocument && res.data.addDocument._id) {
+							this.documents.push({ _id: res.data.addDocument._id, title: title });
+							this.filterDocuments("");
+							//remove loading spinner
+						} else {
+							alert('Error occured while saving document');
+							//remove loading spinner
+							//message something went wrong
+						}
+					});
 			}
 		});
 	}

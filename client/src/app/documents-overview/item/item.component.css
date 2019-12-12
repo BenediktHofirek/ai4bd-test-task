@@ -6,7 +6,7 @@ a, a:visited {
 	width: 100%;
 }
 
-.item {
+mat-list-item.listItem {
 	display: block;
 	border: 1px solid black;
 	margin: 10px 5px;
@@ -16,7 +16,7 @@ a, a:visited {
 	padding: 2px 10px;
 }
 
-.item a mat-icon {
+mat-list-item.listItem a mat-icon {
 	float: right;
 	width: 16px;
 	height: 16px;

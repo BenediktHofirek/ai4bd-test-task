@@ -17,6 +17,7 @@ import { ItemComponent } from './documents-overview/item/item.component';
 import { PageComponent } from './document-detail/page/page.component';
 import { PopupFormComponent } from './shared/popup-form/popup-form.component';
 import { IconButtonComponent } from './shared/icon-button/icon-button.component';
+import { FilterComponent } from './shared/filter/filter.component';
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { IconButtonComponent } from './shared/icon-button/icon-button.component'
 		ItemComponent,
 		PageComponent,
 		PopupFormComponent,
-		IconButtonComponent
+		IconButtonComponent,
+		FilterComponent
 	],
 	imports: [
 		BrowserModule,

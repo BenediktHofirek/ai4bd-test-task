@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import { Document, Page } from '../types';
-import { documentQuery } from '../graphql';
+import { Document, PageOverview, addPageResult } from '../types';
+import { documentQuery, addPageMutation } from '../graphql';
 import { ApolloQueryResult } from 'apollo-client';
 import { IndexService } from '../services/index.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -17,7 +17,7 @@ import { NgForm } from '@angular/forms';
 export class DocumentDetailComponent implements OnInit {
 	private docId: string;
 	document: Document;
-	pages: Page[];
+	pages: PageOverview[];
 	convertedDate: string;
 	documentNumber: number;
 	activeButtonNumber: number;
@@ -41,7 +41,7 @@ export class DocumentDetailComponent implements OnInit {
 			.toPromise()
 			.then((res: ApolloQueryResult<any>) => {
 				this.document = res.data.document;
-				this.pages = res.data.document.pages.sort((a: Page, b: Page) => a.pageNr > b.pageNr);
+				this.pages = res.data.document.pages.sort((a: PageOverview, b: PageOverview) => a.pageNr > b.pageNr);
 				//takes in account incomplete data set; date can be null
 				this.convertedDate = res.data.document.dateCreated
 					? this.convertDate(res.data.document.dateCreated)
@@ -61,14 +61,14 @@ export class DocumentDetailComponent implements OnInit {
 		this.router.navigate([ path ], { relativeTo: this.activatedRoute });
 	}
 
-	addPageDialog() {
+	addPageDialog(): void {
 		const dialogConfig = new MatDialogConfig();
 
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 
 		dialogConfig.data = {
-			formFields: [ { type: 'textarea', label: 'text', options: { rows: '20', cols: '10' } } ],
+			formFields: [ { type: 'textarea', label: 'text', options: { rows: '10', cols: '15' } } ],
 			saveButtonText: 'Add Page'
 		};
 
@@ -76,8 +76,24 @@ export class DocumentDetailComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe((form: NgForm) => {
 			if (form) {
-				console.log(form, form.value, form.value.text);
-				//saveToDatabase
+				const newPageNr = this.pages.length ? this.pages[this.pages.length - 1].pageNr + 1 : 1;
+				//loading spinner
+				this.apollo
+					.mutate({
+						mutation: addPageMutation,
+						variables: { pageNr: newPageNr, text: form.value.text, documentId: this.docId }
+					})
+					.subscribe((res: addPageResult) => {
+						if (res && res.data && res.data.addPage && res.data.addPage._id) {
+							this.pages.push({ _id: res.data.addPage._id, pageNr: newPageNr });
+							this.handleLinkClick(res.data.addPage._id, newPageNr);
+							//remove loading spinner
+						} else {
+							alert('Error occured while saving page');
+							//remove loading spinner
+							//message something went wrong
+						}
+					});
 			}
 		});
 	}
