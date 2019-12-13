@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { Document, PageOverview, addPageResult } from '../types';
 import { documentQuery, addPageMutation } from '../graphql';
 import { ApolloQueryResult } from 'apollo-client';
-import { IndexService } from '../services/index.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { PopupFormComponent } from '../shared/popup-form/popup-form.component';
 import { NgForm } from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
+import { AppState } from '../store/app.reducer';
 
 @Component({
 	selector: 'app-document-detail',
 	templateUrl: './document-detail.component.html',
 	styleUrls: [ './document-detail.component.css' ]
 })
-export class DocumentDetailComponent implements OnInit {
+export class DocumentDetailComponent implements OnInit, OnDestroy {
 	private docId: string;
+	private subscription: Subscription;
 	document: Document;
 	pages: PageOverview[];
 	convertedDate: string;
@@ -26,13 +29,16 @@ export class DocumentDetailComponent implements OnInit {
 		private dialog: MatDialog,
 		private activatedRoute: ActivatedRoute,
 		private apollo: Apollo,
-		private indexService: IndexService,
+		private store: Store<AppState>,
 		private router: Router
 	) {}
 
 	ngOnInit() {
 		this.docId = this.activatedRoute.snapshot.params['docId'];
-		this.documentNumber = this.indexService.getDocumentIndex() + 1;
+		this.subscription = this.store.select('documentNumber').subscribe(store => {
+			this.documentNumber = store.documentNumber;
+		});
+
 		this.apollo
 			.query({
 				query: documentQuery,
@@ -49,6 +55,10 @@ export class DocumentDetailComponent implements OnInit {
 					? this.convertDate(res.data.document.dateCreated)
 					: '';
 			});
+	}
+
+	ngOnDestroy(){
+		this.subscription.unsubscribe();
 	}
 
 	convertDate(dateString: string): string {
