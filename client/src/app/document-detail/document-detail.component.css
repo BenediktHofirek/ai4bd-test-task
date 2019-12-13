@@ -17,15 +17,16 @@ mat-card-content {
 
 mat-icon {
 	font-size: 30px;
-    width: 30px;
-    height: 30px;
+	width: 30px;
+	height: 30px;
 }
 
 .buttons {
-    width: 100%;
+	width: 100%;
 }
-.pageButton, .addButton {
-	font-size: 40px;
+.pageButton,
+.addButton {
+	font-size: 30px;
 	width: 50px;
 	height: 50px;
 	border-radius: 10px;
@@ -33,7 +34,7 @@ mat-icon {
 	margin: 5px 10px;
 	background-color: transparent;
 	cursor: pointer;
-	outline:none
+	outline: none;
 }
 
 .active {
@@ -48,7 +49,7 @@ mat-list-item.listItem {
 	height: 24px;
 }
 
-mat-list-item span.label{
+mat-list-item span.label {
 	display: inline-block;
 	width: 70px;
-	}
+}

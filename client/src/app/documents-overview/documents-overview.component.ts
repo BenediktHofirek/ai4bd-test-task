@@ -32,16 +32,16 @@ export class DocumentsOverviewComponent implements OnInit {
 				query: titlesQuery
 			})
 			.toPromise()
-			.then((res: ApolloQueryResult<any>) => {
+			.then((res: ApolloQueryResult<any>): void => {
 				this.documents = res.data.documents;
-				this.filteredDocuments = [...res.data.documents];
+				this.filteredDocuments = [ ...res.data.documents ];
 				this.documentsCount = res.data.documents.length;
 			});
 	}
 
-	filterDocuments(filter: string):void{
-		if (filter){
-			this.filteredDocuments = this.documents.filter(doc => doc.title.slice(0, filter.length) === filter);
+	filterDocuments(filter: string): void {
+		if (filter) {
+			this.filteredDocuments = this.documents.filter((doc) => doc.title.slice(0, filter.length) === filter);
 		} else {
 			this.filteredDocuments = this.documents;
 		}
@@ -69,9 +69,8 @@ export class DocumentsOverviewComponent implements OnInit {
 
 		const dialogRef = this.dialog.open(PopupFormComponent, dialogConfig);
 
-		dialogRef.afterClosed().subscribe((form: NgForm) => {
+		dialogRef.afterClosed().subscribe((form: NgForm): void => {
 			if (form) {
-				//loading spinner
 				const { value } = form;
 				const { title, author, date } = value;
 				this.apollo
@@ -79,15 +78,12 @@ export class DocumentsOverviewComponent implements OnInit {
 						mutation: addDocumentMutation,
 						variables: { title: title, author: author, dateCreated: date }
 					})
-					.subscribe((res: addDocumentResult) => {
+					.subscribe((res: addDocumentResult): void => {
 						if (res && res.data && res.data.addDocument && res.data.addDocument._id) {
 							this.documents.push({ _id: res.data.addDocument._id, title: title });
-							this.filterDocuments("");
-							//remove loading spinner
+							this.filterDocuments('');
 						} else {
 							alert('Error occured while saving document');
-							//remove loading spinner
-							//message something went wrong
 						}
 					});
 			}

@@ -39,9 +39,11 @@ export class DocumentDetailComponent implements OnInit {
 				variables: { _id: this.docId }
 			})
 			.toPromise()
-			.then((res: ApolloQueryResult<any>) => {
+			.then((res: ApolloQueryResult<any>): void => {
 				this.document = res.data.document;
-				this.pages = res.data.document.pages.sort((a: PageOverview, b: PageOverview) => a.pageNr > b.pageNr);
+				this.pages = res.data.document.pages.sort(
+					(a: PageOverview, b: PageOverview): boolean => a.pageNr > b.pageNr
+				);
 				//takes in account incomplete data set; date can be null
 				this.convertedDate = res.data.document.dateCreated
 					? this.convertDate(res.data.document.dateCreated)
@@ -68,30 +70,26 @@ export class DocumentDetailComponent implements OnInit {
 		dialogConfig.autoFocus = true;
 
 		dialogConfig.data = {
-			formFields: [ { type: 'textarea', label: 'text', options: { rows: '10', cols: '15' } } ],
+			formFields: [ { type: 'textarea', label: 'text', options: { rows: 10, cols: 15 } } ],
 			saveButtonText: 'Add Page'
 		};
 
 		const dialogRef = this.dialog.open(PopupFormComponent, dialogConfig);
 
-		dialogRef.afterClosed().subscribe((form: NgForm) => {
+		dialogRef.afterClosed().subscribe((form?: NgForm): void => {
 			if (form) {
 				const newPageNr = this.pages.length ? this.pages[this.pages.length - 1].pageNr + 1 : 1;
-				//loading spinner
 				this.apollo
 					.mutate({
 						mutation: addPageMutation,
 						variables: { pageNr: newPageNr, text: form.value.text, documentId: this.docId }
 					})
-					.subscribe((res: addPageResult) => {
+					.subscribe((res: addPageResult): void => {
 						if (res && res.data && res.data.addPage && res.data.addPage._id) {
 							this.pages.push({ _id: res.data.addPage._id, pageNr: newPageNr });
 							this.handleLinkClick(res.data.addPage._id, newPageNr);
-							//remove loading spinner
 						} else {
 							alert('Error occured while saving page');
-							//remove loading spinner
-							//message something went wrong
 						}
 					});
 			}

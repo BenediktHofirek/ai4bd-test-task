@@ -1,11 +1,12 @@
 <mat-dialog-content>
 	<div class="topActions">
         <app-icon-button 
-        class="closeButton"
-        mat-dialog-close
-        size="20px"
-        icon="close"
-        borderWidth="1px">
+            class="closeButton"
+            mat-dialog-close
+            size="20px"
+            icon="close"
+            borderWidth="1px"
+        >
 		</app-icon-button>
 	</div>
     <form #f="ngForm">
@@ -34,8 +35,8 @@
             <div class="form-field" *ngSwitchCase='"textarea" '>
                 <label [for]="field.label" style="vertical-align: top">{{field.label + ':'}}</label>
                 <textarea 
-                    [rows]='field.options.rows' 
-                    [cols]='field.options.cols' 
+                    [rows]='"field.options.rows"' 
+                    [cols]='"field.options.cols"' 
                     [id]="field.label"
                     [name]="field.label"
                     ngModel 

@@ -9,6 +9,9 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 export class PopupFormComponent {
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
-		public data: { formFields: [{ type: string; label: string; options: {} }]; saveButtonText: string }
+		public data: {
+			formFields: [{ type: string; label: string; options: { rows?: number; cols?: number } }];
+			saveButtonText: string;
+		}
 	) {}
 }

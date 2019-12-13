@@ -3,7 +3,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { pageQuery } from '../../graphql';
 import { ApolloQueryResult } from 'apollo-client';
-import { IndexService } from '../../services/index.service';
 import { Page } from '../../types';
 
 @Component({
@@ -18,7 +17,7 @@ export class PageComponent implements OnInit {
 	ngOnInit() {
 		this.queryDatabase(this.route.snapshot.params['pageId']);
 
-		this.route.params.subscribe((params: Params) => {
+		this.route.params.subscribe((params: Params): void => {
 			this.queryDatabase(params['pageId']);
 		});
 	}
@@ -30,7 +29,7 @@ export class PageComponent implements OnInit {
 				variables: { _id: id }
 			})
 			.toPromise()
-			.then((res: ApolloQueryResult<any>) => {
+			.then((res: ApolloQueryResult<any>): void => {
 				this.page = res.data.page;
 			});
 	};

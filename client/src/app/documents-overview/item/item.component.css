@@ -1,8 +1,7 @@
-a, a:visited {
+a,a:visited {
 	color: black;
 	display: block;
 	text-decoration: none;
-	vertical-align: middle;
 	width: 100%;
 }
 
@@ -13,7 +12,7 @@ mat-list-item.listItem {
 	padding: 0px;
 	text-align: center;
 	font-size: 16px;
-	padding: 2px 10px;
+	padding: 2px 10px 2px 26px;
 }
 
 mat-list-item.listItem a mat-icon {

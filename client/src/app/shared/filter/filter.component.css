@@ -1,3 +1,8 @@
+div.filter{
+	padding: 5px;
+	margin: 10px auto 20px auto;
+}
+
 input {
 	border: 1px solid black;
 }
